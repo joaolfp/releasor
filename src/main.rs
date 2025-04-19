@@ -4,7 +4,6 @@ use std::process::Command;
 fn main() {
     println!("Get values for homebrew\n");
 
-    // Prompt user for project name
     print!("What's your project name: ");
     io::stdout().flush().unwrap();
 
@@ -13,11 +12,10 @@ fn main() {
         .read_line(&mut name)
         .expect("Failed to read input");
 
-    let name = name.trim(); // removes newline
+    let name = name.trim();
 
     let program_tar_gz = format!("{}.tar.gz", name);
 
-    // Run `cargo build --release`
     let build_output = Command::new("cargo")
         .arg("build")
         .arg("--release")
@@ -33,7 +31,6 @@ fn main() {
         String::from_utf8_lossy(&build_output.stderr)
     );
 
-    // Run `mise release`
     let release = Command::new("mise")
         .arg("release")
         .output()
@@ -41,7 +38,6 @@ fn main() {
 
     println!("mise release status: {}", release.status);
 
-    // Create .tar.gz from built binary
     let tar_output = Command::new("tar")
         .args([
             "-cvzf",
