@@ -1,62 +1,98 @@
 use std::io::{self, Write};
-use std::process::Command;
+use std::process;
+use std::process::{Command, Output};
 
 fn main() {
     println!("Get values for homebrew\n");
+    let project_name = get_project_name();
+    start_release(project_name);
+}
 
+fn start_release(project_name: String) {
+    let project_tar_gz = format!("{}.tar.gz", project_name);
+
+    let cargo_release_output = cargo_release_output();
+    let tar_output = tar_output(&project_tar_gz, &*project_name);
+    let get_shasum_output = get_shasum_output(&project_tar_gz);
+
+    validate_output_status(
+        cargo_release_output,
+        tar_output,
+        get_shasum_output,
+    );
+}
+
+fn get_project_name() -> String {
     print!("What's your project name: ");
     io::stdout().flush().unwrap();
 
-    let mut name = String::new();
+    let mut project_name = String::new();
     io::stdin()
-        .read_line(&mut name)
+        .read_line(&mut project_name)
         .expect("Failed to read input");
 
-    let name = name.trim();
+    let project_name = project_name.trim().to_string();
 
-    let program_tar_gz = format!("{}.tar.gz", name);
+    if project_name.is_empty() {
+        eprintln!("❌ Project name can't be empty");
+        process::exit(1);
+    }
 
-    let build_output = Command::new("cargo")
+    project_name
+}
+
+fn cargo_release_output() -> Output {
+    Command::new("cargo")
         .arg("build")
         .arg("--release")
         .output()
-        .expect("Failed to execute cargo build");
+        .expect("Failed to execute cargo build")
+}
 
-    println!(
-        "cargo build stdout:\n{}",
-        String::from_utf8_lossy(&build_output.stdout)
-    );
-    eprintln!(
-        "cargo build stderr:\n{}",
-        String::from_utf8_lossy(&build_output.stderr)
-    );
-
-    let release = Command::new("mise")
-        .arg("release")
-        .output()
-        .expect("Failed to execute mise release");
-
-    println!("mise release status: {}", release.status);
-
-    let tar_output = Command::new("tar")
+fn tar_output(
+    project_tar_gz: &str, 
+    project_name: &str
+) -> Output {
+    Command::new("tar")
         .args([
             "-cvzf",
-            &program_tar_gz,
+            project_tar_gz,
             "-C",
             "target/release",
-            name
+            project_name,
         ])
         .output()
-        .expect("Failed to create tar.gz");
+        .expect("Failed to create tar.gz")
+}
 
-    if tar_output.status.success() {
-        println!("✅ Success creating {}", program_tar_gz);
+fn get_shasum_output(project_tar_gz: &str) -> Output {
+    Command::new("shasum")
+        .args(["-a", "256", project_tar_gz])
+        .output()
+        .expect("Failed to execute shasum")
+}
+
+fn validate_output_status(
+    release: Output, 
+    tar: Output, 
+    shasum: Output
+) {
+    if release.status.success() {
+        println!("✅ Success cargo release");
+    } else {
+        eprintln!("❌ Error cargo release");
+    }
+
+    if tar.status.success() {
+        println!("✅ Success creating tar.gz");
     } else {
         eprintln!("❌ Error creating tar.gz");
     }
 
-    // TODO: I need to implement the status for release
-    // TODO: Change variable names
-    // TODO: Organize into functions
-    // TODO: I need to validate in case of empty field
+    if shasum.status.success() {
+        println!("✅ Success get shasum\n");
+        println!("{}", String::from_utf8_lossy(&shasum.stdout));
+    } else {
+        eprintln!("❌ Error get shasum");
+    }
 }
