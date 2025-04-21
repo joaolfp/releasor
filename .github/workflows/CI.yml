@@ -1,0 +1,21 @@
+name: CI
+on: [push, pull_request]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Mise install
+      uses: jdx/mise-action@v2
+      with:
+        experimental: true
+    
+    - name: Build
+      run: mise build
