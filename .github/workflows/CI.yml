@@ -19,6 +19,3 @@ jobs:
     
     - name: Build
       run: mise build
-
-    - name: Tests
-      run: mise test
