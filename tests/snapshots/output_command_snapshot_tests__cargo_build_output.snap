@@ -1,0 +1,10 @@
+---
+source: tests/output_command_snapshot_tests.rs
+expression: snapshot
+snapshot_kind: text
+---
+status: exit status: 0
+stdout:
+
+stderr:
+    Finished `release` profile [optimized] target(s) in 0.00s

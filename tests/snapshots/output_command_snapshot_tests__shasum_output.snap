@@ -1,0 +1,10 @@
+---
+source: tests/output_command_snapshot_tests.rs
+expression: snapshot
+snapshot_kind: text
+---
+status: exit status: 0
+stdout:
+e430890145c7340f7d1253add9d129ad3981e85efeee51a3e0a6f89e7854b4b5  releasor.tar.gz
+
+stderr:
