@@ -5,7 +5,7 @@ use releasor::OutputCommand;
 fn test_cargo_release_output() {
     let output = OutputCommand::cargo_release_output();
     let status = output.status;
-    assert_eq!(status.success(), true);
+    assert!(status.success());
 }
 
 #[test]
@@ -16,7 +16,7 @@ fn test_tar_output() {
     );
 
     let status = output.status;
-    assert_eq!(status.success(), true);
+    assert!(status.success());
 }
 
 #[test]
@@ -26,7 +26,7 @@ fn test_get_shasum_output() {
     );
 
     let status = output.status;
-    assert_eq!(status.success(), true);
+    assert!(status.success());
 
     fs::remove_file("releasor.tar.gz")
         .expect("Failed to delete the file");

@@ -1,31 +1,47 @@
 use std::process::Output;
 
+/// Utility struct for printing and checking the status of executed commands.
 pub struct Status;
 
 impl Status {
-    pub fn get_output_status(
-        release: Output,
-        tar: Output,
-        shasum: Output
-    ) {
-        Self::print_result(&release, "cargo release");
-        Self::print_result(&tar, "creating tar.gz");
+    /// Prints the status of cargo, tar, and shasum commands and returns `true` if all succeeded.
+    pub fn print_status(release: Output, tar: Output, shasum: Output) -> bool {
+        let release_ok = Self::print_result(&release, "cargo release");
+        let tar_ok = Self::print_result(&tar, "creating tar.gz");
+        let shasum_ok = Self::print_shasum(&shasum);
 
-        if shasum.status.success() {
-            println!(
-                "✅ Success get shasum\n{}", 
-                String::from_utf8_lossy(&shasum.stdout)
-            );
+        release_ok && tar_ok && shasum_ok
+    }
+
+    /// Prints the result of a single command and returns whether it succeeded.
+    fn print_result(output: &Output, task: &str) -> bool {
+        if output.status.success() {
+            println!("✅ Success {}", task);
+            true
         } else {
-            eprintln!("❌ Error get shasum");
+            eprintln!(
+                "❌ Error {}\n{}",
+                task,
+                String::from_utf8_lossy(&output.stderr)
+            );
+            false
         }
     }
 
-    fn print_result(output: &Output, task: &str) {
+    /// Prints the result of the shasum command and returns whether it succeeded.
+    fn print_shasum(output: &Output) -> bool {
         if output.status.success() {
-            println!("✅ Success {}", task);
+            println!(
+                "✅ Success get shasum\n{}",
+                String::from_utf8_lossy(&output.stdout)
+            );
+            true
         } else {
-            eprintln!("❌ Error {}", task);
+            eprintln!(
+                "❌ Error get shasum\n{}",
+                String::from_utf8_lossy(&output.stderr)
+            );
+            false
         }
     }
 }
