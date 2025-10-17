@@ -5,7 +5,11 @@ pub struct Status;
 
 impl Status {
     /// Prints the status of cargo, tar, and shasum commands and returns `true` if all succeeded.
-    pub fn print_status(release: Output, tar: Output, shasum: Output) -> bool {
+    pub fn print_status(
+        release: Output, 
+        tar: Output, 
+        shasum: Output
+    ) -> bool {
         let release_ok = Self::print_result(&release, "cargo release");
         let tar_ok = Self::print_result(&tar, "creating tar.gz");
         let shasum_ok = Self::print_shasum(&shasum);
