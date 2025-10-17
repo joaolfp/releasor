@@ -12,4 +12,4 @@ exclude = [".github/**"]
 [dependencies]
 
 [dev-dependencies]
-insta = "1.43.1"
+insta = "1.43.2"

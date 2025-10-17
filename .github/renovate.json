@@ -1,27 +1,31 @@
 {
-  "extends": [
-    "config:recommended"
-  ],
-  "packageRules": [
-    {
-      "automerge": false,
-      "matchPackageNames": [
-        "*"
-      ]
-    }
-  ],
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+
+  "labels": ["dependencies", "renovate"],
+  "automerge": false,
+
   "commitMessagePrefix": "chore(deps):",
   "commitMessageAction": "update",
-  "commitMessageTopic": "{{depName}} to v{{newVersion}}",
+  "commitMessageTopic": "{{depName}}",
+  "commitMessageSuffix": " to v{{newVersion}}",
+
+  "prTitle": "chore(deps): update {{depName}} to v{{newVersion}}",
+
+  "packageRules": [
+    {
+      "matchPackageNames": ["*"],
+      "automerge": false
+    }
+  ],
+
   "customManagers": [
     {
       "customType": "regex",
       "depNameTemplate": "rust",
       "packageNameTemplate": "rust-lang/rust",
       "datasourceTemplate": "github-releases",
-      "managerFilePatterns": [
-        "/(^|/)rust-toolchain\\.toml$/"
-      ],
+      "managerFilePatterns": ["/(^|/)rust-toolchain\\.toml$/"],
       "matchStrings": [
         "channel\\s*=\\s*\"(?<currentValue>\\d+\\.\\d+(\\.\\d+)?)\""
       ]
