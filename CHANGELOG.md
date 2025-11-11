@@ -1,5 +1,33 @@
 # Changelog
 
+## [unreleased]
+
+### Dependency Updates
+
+- Update rust to v1.91.1 to v1.91.1
+
+## [1.1.0] - 2025-11-11
+
+### Bug Fixes
+
+- Indent parameters
+- Renovate config
+
+### Dependency Updates
+
+- Update rust to v1.91.0 to v1.91.0
+- Update rust to v1.90.0 to v1.90.0
+- Update Rust crate insta to v1.43.2
+- Update jdx/mise-action action to v3
+- Update actions/checkout action to v5
+
+### Refactor
+
+- Code adjustment and correction
+- Add documentation and adjustment code in output_command
+- Add documentation and adjustment code
+- Update renovate
+
 ## [1.0.0] - 2025-05-08
 
 ### Bug Fixes
