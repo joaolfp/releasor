@@ -1,51 +1,50 @@
-use std::process::Output;
+use std::process::{Output, exit};
 
-/// Utility struct for printing and checking the status of executed commands.
+/// Utility struct for printing and checking results of executed commands.
 pub struct Status;
 
 impl Status {
-    /// Prints the status of cargo, tar, and shasum commands and returns `true` if all succeeded.
+    /// Prints the status of all commands.
+    /// If any command fails, the program terminates immediately.
     pub fn print_status(
-        release: Output, 
-        tar: Output, 
-        shasum: Output
-    ) -> bool {
-        let release_ok = Self::print_result(&release, "cargo release");
-        let tar_ok = Self::print_result(&tar, "creating tar.gz");
-        let shasum_ok = Self::print_shasum(&shasum);
-
-        release_ok && tar_ok && shasum_ok
+        release: Output,
+        tar: Output,
+        shasum: Output,
+    ) {
+        Self::check(&release, "cargo release");
+        Self::check(&tar, "creating tar.gz");
+        Self::check_shasum(&shasum);
+        
+        println!("🎉 All tasks completed successfully!");
     }
 
-    /// Prints the result of a single command and returns whether it succeeded.
-    fn print_result(output: &Output, task: &str) -> bool {
+    /// Internal helper: print result or exit on error.
+    fn check(output: &Output, task: &str) {
         if output.status.success() {
             println!("✅ Success {}", task);
-            true
         } else {
             eprintln!(
                 "❌ Error {}\n{}",
                 task,
                 String::from_utf8_lossy(&output.stderr)
             );
-            false
+            exit(1);
         }
     }
 
-    /// Prints the result of the shasum command and returns whether it succeeded.
-    fn print_shasum(output: &Output) -> bool {
+    /// Special-case for shasum, because it prints output on success.
+    fn check_shasum(output: &Output) {
         if output.status.success() {
             println!(
                 "✅ Success get shasum\n{}",
                 String::from_utf8_lossy(&output.stdout)
             );
-            true
         } else {
             eprintln!(
                 "❌ Error get shasum\n{}",
                 String::from_utf8_lossy(&output.stderr)
             );
-            false
+            exit(1);
         }
     }
 }

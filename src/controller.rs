@@ -47,9 +47,6 @@ impl Controller {
         let tar = OutputCommand::tar_output(&tar_file, project_name);
         let shasum = OutputCommand::get_shasum_output(&tar_file);
 
-        let ok = Status::print_status(release, tar, shasum);
-        if !ok {
-            process::exit(1);
-        }
+        Status::print_status(release, tar, shasum);
     }
 }
