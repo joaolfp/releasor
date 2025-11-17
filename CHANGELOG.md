@@ -1,10 +1,19 @@
 # Changelog
 
-## [unreleased]
+## [1.2.0] - 2025-11-17
 
 ### Dependency Updates
 
 - Update rust to v1.91.1 to v1.91.1
+
+### Features
+
+- Enhance README with detailed project information
+
+### Refactor
+
+- Update input stdout to demand input
+- Update changelog
 
 ## [1.1.0] - 2025-11-11
 
