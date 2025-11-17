@@ -1,10 +1,10 @@
 [package]
 name = "releasor"
-version = "1.1.0"
+version = "1.2.0"
 edition = "2024"
 authors = ["João Lucas <joaolucasfp2001@gmail.com>"]
 license = "MIT"
-description = "Command Line Tools for macOS to automate creating tar.gz files"
+description = "A CLI that automates release tasks for Rust 🦀 projects, streamlining builds, .tar.gz packaging, and binary verification for a fast and consistent workflow."
 readme = "README.md"
 repository = "https://github.com/joaolfp/releasor"
 exclude = [".github/**"]
