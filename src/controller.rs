@@ -1,5 +1,5 @@
-use std::{io, process};
-use std::io::Write;
+use demand::Input;
+use std::process;
 
 use crate::output_command::OutputCommand;
 use crate::status::Status;
@@ -17,15 +17,20 @@ impl Controller {
 
     /// Prompts the user for the project name and returns a validated non-empty string.
     fn get_project_name() -> String {
-        print!("What's your project name: ");
-        io::stdout().flush().expect("Failed to flush stdout");
-
-        let mut input = String::new();
-        io::stdin()
-            .read_line(&mut input)
-            .expect("Failed to read input");
-
-        let name = input.trim();
+        let input = Input::new("What's your project name?")
+            .description("We'll use this to customize the release file name.")
+            .placeholder("Enter the project name");
+        let name = match input.run() {
+            Ok(value) => value.trim().to_string(),
+            Err(e) => {
+                if e.kind() == std::io::ErrorKind::Interrupted {
+                    println!("Input cancelled");
+                    process::exit(1);
+                } else {
+                    panic!("Error: {}", e);
+                }
+            }
+        };
 
         if name.is_empty() {
             eprintln!("❌ Project name can't be empty");
@@ -36,7 +41,7 @@ impl Controller {
             process::exit(1);
         }
 
-        name.to_string()
+        name
     }
 
     /// Builds the release binary, creates `<name>.tar.gz`, computes SHA-256, and prints status.
