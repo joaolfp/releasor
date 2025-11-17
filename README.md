@@ -28,9 +28,7 @@ cargo install releasor
 
 ## Usage
 
-```shell
-releasor
-```
+<img src="https://github.com/joaolfp/releasor/blob/main/example.gif" />
 
 ## Contributing
 
