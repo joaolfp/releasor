@@ -29,7 +29,7 @@ jobs:
       - name: Get previous version from git tag
         id: prev_tag
         run: |
-          TAG=$(git tag --sort=-creatordate | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n1 | sed 's/^v//')
+          TAG=$(git tag --sort=-creatordate | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n1)
           echo "prev=${TAG}" >> $GITHUB_OUTPUT
 
       - name: Generate Release Notes from CHANGELOG.md
@@ -43,11 +43,11 @@ jobs:
           # Extrai apenas as linhas que começam com "- " da seção da versão desejada
           awk "/^## Version $VERSION\$/ {flag=1; next} /^## Version / {flag=0} flag" CHANGELOG.md | grep '^- ' > changes.txt || true
 
-          echo '## What'\''s changed' > RELEASE_NOTES.md
+          echo '## What\'s changed' > RELEASE_NOTES.md
           cat changes.txt >> RELEASE_NOTES.md
 
           echo "" >> RELEASE_NOTES.md
-          echo "Full Changelog: [${PREV}...${VERSION}](https://github.com/${{ github.repository }}/compare/${PREV}...v${VERSION})" >> RELEASE_NOTES.md
+          echo "Full Changelog: [${PREV}...v${VERSION}](https://github.com/${{ github.repository }}/compare/${PREV}...v${VERSION})" >> RELEASE_NOTES.md
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
