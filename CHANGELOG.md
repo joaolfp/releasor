@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.3.0] - 2025-11-19
+
+### Bug Fixes
+
+- Full changelog in release
+
+### Features
+
+- Setup cursor bugbot and deploy action
+- Setup copy shasum button
+- Add example in README
+- Example.gif
+
+### Refactor
+
+- Do not generate release
+- Organize header
+- Update changelog to v1.2.0
+
 ## [1.2.0] - 2025-11-17
 
 ### Dependency Updates
