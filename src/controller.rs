@@ -11,7 +11,7 @@ pub struct Controller;
 impl Controller {
     /// Starts the release flow and exits with code 1 if any step fails.
     pub fn start_release() {
-        println!("Preparing Homebrew artifacts\n");
+        println!("Releasor\n");
         let project_name = Self::get_project_name();
         Self::generate_tar_gz(project_name.as_str());
     }
@@ -19,7 +19,6 @@ impl Controller {
     /// Prompts the user for the project name and returns a validated non-empty string.
     fn get_project_name() -> String {
         let input = Input::new("What's your project name?")
-            .description("We'll use this to customize the release file name.")
             .placeholder("Enter the project name");
         let name = match input.run() {
             Ok(value) => value.trim().to_string(),
