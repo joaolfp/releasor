@@ -15,7 +15,7 @@ impl Status {
         Self::check(&tar, "creating tar.gz");
         Self::check_shasum(&shasum);
         
-        println!("🎉 All tasks completed successfully!");
+        println!("🎉 All tasks completed successfully!\n");
     }
 
     /// Internal helper: print result or exit on error.
