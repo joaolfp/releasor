@@ -39,3 +39,23 @@ impl OutputCommand {
         )
     }
 }
+
+pub trait OutputCommandRunner {
+    fn cargo_release_output(&self) -> Output;
+    fn tar_output(&self, project_tar_gz: &str, project_name: &str) -> Output;
+    fn get_shasum_output(&self, project_tar_gz: &str) -> Output;
+}
+
+impl OutputCommandRunner for OutputCommand {
+    fn cargo_release_output(&self) -> Output {
+        Self::cargo_release_output()
+    }
+
+    fn tar_output(&self, project_tar_gz: &str, project_name: &str) -> Output {
+        Self::tar_output(project_tar_gz, project_name)
+    }
+
+    fn get_shasum_output(&self, project_tar_gz: &str) -> Output {
+        Self::get_shasum_output(project_tar_gz)
+    }
+}

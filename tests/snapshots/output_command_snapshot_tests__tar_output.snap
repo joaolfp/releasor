@@ -3,8 +3,8 @@ source: tests/output_command_snapshot_tests.rs
 expression: snapshot
 snapshot_kind: text
 ---
-status: exit status: 0
+status: ExitStatus(unix_wait_status(0))
 stdout:
-
+tar output fake
 stderr:
-a releasor
+tar stderr fake
