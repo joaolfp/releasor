@@ -3,7 +3,7 @@ use std::process;
 
 use crate::output_command::OutputCommand;
 use crate::status::Status;
-use copypasta::{ClipboardContext, ClipboardProvider};
+use arboard::Clipboard;
 
 /// Orchestrates the release workflow: prompt, build, archive, checksum, and report.
 pub struct Controller;
@@ -75,18 +75,8 @@ impl Controller {
                 .trim()
                 .to_string();
 
-            match ClipboardContext::new() {
-                Ok(mut clipboard) => {
-                    if let Err(err) = clipboard.set_contents(shasum.clone()) {
-                        eprintln!("❌ Failed to copy to clipboard: {err}");
-                    } else {
-                        println!("✅ Shasum copied to clipboard!");
-                    }
-                }
-                Err(err) => {
-                    eprintln!("❌ Could not access clipboard: {err}");
-                }
-            }
+            let mut clipboard = Clipboard::new().unwrap();
+            clipboard.set_text(shasum.clone()).unwrap();
         }
     }
 }

@@ -10,8 +10,8 @@ repository = "https://github.com/joaolfp/releasor"
 exclude = [".github/**"]
 
 [dependencies]
+arboard = "3.6.1"
 demand = "1.7.2"
-copypasta = "0.10"
 
 [dev-dependencies]
 insta = "1.43.2"
