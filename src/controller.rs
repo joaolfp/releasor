@@ -75,8 +75,18 @@ impl Controller {
                 .trim()
                 .to_string();
 
-            let mut clipboard = Clipboard::new().unwrap();
-            clipboard.set_text(shasum.clone()).unwrap();
+            match Clipboard::new() {
+                Ok(mut clipboard) => {
+                    if let Err(err) = clipboard.set_text(shasum.clone()) {
+                        eprintln!("❌ Failed to copy to clipboard: {err}");
+                    } else {
+                        println!("✅ Shasum copied to clipboard!");
+                    }
+                }
+                Err(err) => {
+                    eprintln!("❌ Could not access clipboard: {err}");
+                }
+            }
         }
     }
 }
