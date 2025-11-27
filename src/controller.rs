@@ -18,7 +18,16 @@ impl Controller {
 
     fn generate_tar_gz() {
         let arg = Args::parse();
-        let project_name = arg.file_name.as_str();
+        let project_name = arg.file_name.trim();
+
+        if project_name.is_empty() {
+            eprintln!("❌ Project name can't be empty");
+            std::process::exit(1);
+        }
+        if project_name.contains('/') || project_name.contains('\\') {
+            eprintln!("❌ Project name must not contain path separators");
+            std::process::exit(1);
+        }
         let tar_file = format!("{}.tar.gz", project_name);
 
         let release = OutputCommand::cargo_release_output();
