@@ -12,7 +12,6 @@
 A command-line tool to automate release tasks for Rust 🦀 projects and libraries. releasor streamlines building, packaging into `.tar.gz` archives, and verifying binaries, providing a fast and consistent release workflow.
 
 ##  Features
-- Interactive prompt for project/release name
 - Automated cargo build --release execution
 - Creation of compressed .tar.gz archives with your chosen name
 - Generation and printout of SHA-256 checksums for integrity verification
@@ -28,7 +27,9 @@ cargo install releasor
 
 ## Usage
 
-<img src="https://github.com/joaolfp/releasor/blob/main/example.gif" />
+```sh
+releasor --file-name package
+```
 
 ## Contributing
 

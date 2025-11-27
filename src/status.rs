@@ -1,11 +1,8 @@
 use std::process::{Output, exit};
 
-/// Utility struct for printing and checking results of executed commands.
 pub struct Status;
 
 impl Status {
-    /// Prints the status of all commands.
-    /// If any command fails, the program terminates immediately.
     pub fn print_status(
         release: Output,
         tar: Output,
@@ -18,7 +15,6 @@ impl Status {
         println!("🎉 All tasks completed successfully!\n");
     }
 
-    /// Internal helper: print result or exit on error.
     fn check(output: &Output, task: &str) {
         if output.status.success() {
             println!("✅ Success {}", task);
@@ -32,7 +28,6 @@ impl Status {
         }
     }
 
-    /// Special-case for shasum, because it prints output on success.
     fn check_shasum(output: &Output) {
         if output.status.success() {
             println!(
