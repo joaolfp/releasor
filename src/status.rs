@@ -24,6 +24,7 @@ impl Status {
                 task,
                 String::from_utf8_lossy(&output.stderr)
             );
+
             exit(1);
         }
     }
@@ -39,6 +40,7 @@ impl Status {
                 "❌ Error get shasum\n{}",
                 String::from_utf8_lossy(&output.stderr)
             );
+
             exit(1);
         }
     }

@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.4.0] - 2025-11-27
+
+### Dependency Updates
+
+- Update Rust crate insta to v1.44.2 to v1.44.2 (#18)
+- Update Rust crate insta to v1.44.1 to v1.44.1
+- Update actions/checkout action to v6 to v6
+- Update Rust crate insta to v1.44.0 to v1.44.0
+
+### Refactor
+
+- Update input to args (#19)
+- Migrate copypasta to arboard (#17)
+- Update example to v1.3.0
+
 ## [1.3.0] - 2025-11-19
 
 ### Bug Fixes

@@ -24,10 +24,12 @@ impl Controller {
             eprintln!("❌ Project name can't be empty");
             std::process::exit(1);
         }
+
         if project_name.contains('/') || project_name.contains('\\') {
             eprintln!("❌ Project name must not contain path separators");
             std::process::exit(1);
         }
+        
         let tar_file = format!("{}.tar.gz", project_name);
 
         let release = OutputCommand::cargo_release_output();
