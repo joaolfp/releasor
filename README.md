@@ -28,7 +28,9 @@ cargo install releasor
 
 ## Usage
 
-<img src="https://github.com/joaolfp/releasor/blob/main/example.gif" />
+```sh
+release --file-name package
+```
 
 ## Contributing
 

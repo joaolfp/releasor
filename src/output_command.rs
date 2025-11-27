@@ -1,6 +1,5 @@
 use std::process::{Command, Output};
 
-/// Utility struct for running common build and packaging commands.
 pub struct OutputCommand;
 
 impl OutputCommand {

@@ -11,7 +11,7 @@ exclude = [".github/**"]
 
 [dependencies]
 arboard = "3.6.1"
-demand = "1.7.2"
+clap = { version = "4.5.53", features = ["derive"] }
 
 [dev-dependencies]
 insta = "1.43.2"
