@@ -28,7 +28,7 @@ cargo install releasor
 ## Usage
 
 ```sh
-releasor --file-name package
+releasor -f package_name
 ```
 
 ## Contributing

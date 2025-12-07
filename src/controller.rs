@@ -6,7 +6,7 @@ use clap::Parser;
 #[derive(Parser)]
 struct Args {
     #[arg(short, long)]
-    file_name: String
+    file_name: String,
 }
 
 pub struct Controller;
@@ -29,7 +29,7 @@ impl Controller {
             eprintln!("❌ Project name must not contain path separators");
             std::process::exit(1);
         }
-        
+
         let tar_file = format!("{}.tar.gz", project_name);
 
         let release = OutputCommand::cargo_release_output();
@@ -41,8 +41,11 @@ impl Controller {
     }
 
     fn setup_copy_shasum(shasum_output: &std::process::Output) {
-        let shasum = String::from_utf8_lossy(&shasum_output.stdout)
-            .trim()
+        let shasum_raw = String::from_utf8_lossy(&shasum_output.stdout);
+        let shasum = shasum_raw
+            .split_whitespace()
+            .next()
+            .unwrap_or("")
             .to_string();
 
         match Clipboard::new() {
