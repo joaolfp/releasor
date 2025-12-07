@@ -1,7 +1,7 @@
-use std::process::{Output, ExitStatus};
-use std::os::unix::process::ExitStatusExt;
 use insta::assert_snapshot;
 use releasor::output_command::OutputCommandRunner;
+use std::os::unix::process::ExitStatusExt;
+use std::process::{ExitStatus, Output};
 
 struct MockOutputCommand;
 

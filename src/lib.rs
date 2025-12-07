@@ -1,7 +1,7 @@
-pub mod status;
-pub mod output_command;
 pub mod controller;
+pub mod output_command;
+pub mod status;
 
-pub use status::Status;
-pub use output_command::{OutputCommand, OutputCommandRunner};
 pub use controller::Controller;
+pub use output_command::{OutputCommand, OutputCommandRunner};
+pub use status::Status;

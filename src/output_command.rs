@@ -5,10 +5,7 @@ pub struct OutputCommand;
 impl OutputCommand {
     /// Runs a shell command with given arguments and returns its output.
     fn run(cmd: &str, args: &[&str], error: &str) -> Output {
-        Command::new(cmd)
-            .args(args)
-            .output()
-            .expect(error)
+        Command::new(cmd).args(args).output().expect(error)
     }
 
     /// Runs `cargo build --release` and returns the output.
@@ -24,7 +21,13 @@ impl OutputCommand {
     pub fn tar_output(project_tar_gz: &str, project_name: &str) -> Output {
         Self::run(
             "tar",
-            &["-cvzf", project_tar_gz, "-C", "target/release", project_name],
+            &[
+                "-cvzf",
+                project_tar_gz,
+                "-C",
+                "target/release",
+                project_name,
+            ],
             "Failed to create tar.gz",
         )
     }

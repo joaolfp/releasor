@@ -3,15 +3,11 @@ use std::process::{Output, exit};
 pub struct Status;
 
 impl Status {
-    pub fn print_status(
-        release: Output,
-        tar: Output,
-        shasum: Output,
-    ) {
+    pub fn print_status(release: Output, tar: Output, shasum: Output) {
         Self::check(&release, "cargo release");
         Self::check(&tar, "creating tar.gz");
         Self::check_shasum(&shasum);
-        
+
         println!("🎉 All tasks completed successfully!\n");
     }
 
