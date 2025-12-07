@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.4.1] - 2025-12-07
+
+### Bug Fixes
+
+- Lint and ftm warning - copy only shasum (#21)
+
+### Dependency Updates
+
+- Update Rust crate insta to v1.44.3 to v1.44.3 (#20)
+
 ## [1.4.0] - 2025-11-27
 
 ### Dependency Updates
