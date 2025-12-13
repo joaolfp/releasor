@@ -3,12 +3,10 @@ use std::process::{Command, Output};
 pub struct OutputCommand;
 
 impl OutputCommand {
-    /// Runs a shell command with given arguments and returns its output.
     fn run(cmd: &str, args: &[&str], error: &str) -> Output {
         Command::new(cmd).args(args).output().expect(error)
     }
 
-    /// Runs `cargo build --release` and returns the output.
     pub fn cargo_release_output() -> Output {
         Self::run(
             "cargo",
@@ -17,7 +15,6 @@ impl OutputCommand {
         )
     }
 
-    /// Creates a `.tar.gz` archive from the release binary.
     pub fn tar_output(project_tar_gz: &str, project_name: &str) -> Output {
         Self::run(
             "tar",
@@ -32,32 +29,11 @@ impl OutputCommand {
         )
     }
 
-    /// Generates a SHA-256 checksum for the `.tar.gz` file.
     pub fn get_shasum_output(project_tar_gz: &str) -> Output {
         Self::run(
             "shasum",
             &["-a", "256", project_tar_gz],
             "Failed to execute shasum",
         )
-    }
-}
-
-pub trait OutputCommandRunner {
-    fn cargo_release_output(&self) -> Output;
-    fn tar_output(&self, project_tar_gz: &str, project_name: &str) -> Output;
-    fn get_shasum_output(&self, project_tar_gz: &str) -> Output;
-}
-
-impl OutputCommandRunner for OutputCommand {
-    fn cargo_release_output(&self) -> Output {
-        Self::cargo_release_output()
-    }
-
-    fn tar_output(&self, project_tar_gz: &str, project_name: &str) -> Output {
-        Self::tar_output(project_tar_gz, project_name)
-    }
-
-    fn get_shasum_output(&self, project_tar_gz: &str) -> Output {
-        Self::get_shasum_output(project_tar_gz)
     }
 }

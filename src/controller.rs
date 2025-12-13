@@ -1,7 +1,8 @@
-use crate::output_command::OutputCommand;
-use crate::status::Status;
 use arboard::Clipboard;
 use clap::Parser;
+
+use crate::output_command::OutputCommand;
+use crate::status::Status;
 
 #[derive(Parser)]
 struct Args {
@@ -33,10 +34,15 @@ impl Controller {
         let tar_file = format!("{}.tar.gz", project_name);
 
         let release = OutputCommand::cargo_release_output();
-        let tar = OutputCommand::tar_output(&tar_file, project_name);
-        let shasum = OutputCommand::get_shasum_output(&tar_file);
+        Status::check(&release, "cargo release");
 
-        Status::print_status(release, tar, shasum.clone());
+        let tar = OutputCommand::tar_output(&tar_file, project_name);
+        Status::check(&tar, "creating tar.gz");
+
+        let shasum = OutputCommand::get_shasum_output(&tar_file);
+        Status::check_shasum(&shasum);
+
+        println!("🎉 All tasks completed successfully!\n");
         Self::setup_copy_shasum(&shasum);
     }
 
