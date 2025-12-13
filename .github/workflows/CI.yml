@@ -16,5 +16,8 @@ jobs:
 
       - uses: Swatinem/rust-cache@42c55942cfd355e94e6864616f4dbb3392bd2789
 
-      - name: Build
+      - name: Run build
         run: mise build
+
+      - name: Run tests
+        run: mise test
