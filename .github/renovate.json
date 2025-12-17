@@ -1,24 +1,14 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
-
-  "labels": ["dependencies", "renovate"],
-  "automerge": false,
-
-  "commitMessagePrefix": "chore(deps):",
-  "commitMessageAction": "update",
-  "commitMessageTopic": "{{depName}}",
-  "commitMessageSuffix": " to v{{newVersion}}",
-
-  "prTitle": "chore(deps): update {{depName}} to v{{newVersion}}",
-
   "packageRules": [
     {
-      "matchPackageNames": ["*"],
-      "automerge": false
+      "automerge": true,
+      "matchPackageNames": ["*"]
     }
   ],
-
+  "commitMessagePrefix": "chore(deps):",
+  "commitMessageAction": "update",
+  "commitMessageTopic": "{{depName}} to v{{newVersion}}",
   "customManagers": [
     {
       "customType": "regex",
