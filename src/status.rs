@@ -26,7 +26,7 @@ impl Status {
         }
 
         eprintln!(
-            "❌ Error get shasum{}",
+            "❌ Error get shasum {}",
             String::from_utf8_lossy(&output.stderr)
         );
         exit(1);
