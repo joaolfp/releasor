@@ -3,14 +3,14 @@ use std::process::{Output, exit};
 pub struct Status;
 
 impl Status {
-    pub fn check(output: &Output) {
+    pub fn check(output: &Output, task: &str) {
         if output.status.success() {
-            println!("✅ Running cargo release");
+            println!("✅ {task}");
             return;
         }
 
         eprintln!(
-            "❌ Error running cargo release {}",
+            "❌ Error {task} {}",
             String::from_utf8_lossy(&output.stderr)
         );
         exit(1);
