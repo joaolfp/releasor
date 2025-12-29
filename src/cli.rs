@@ -10,9 +10,9 @@ struct Args {
     file_name: String,
 }
 
-pub struct Controller;
+pub struct Cli;
 
-impl Controller {
+impl Cli {
     pub fn start_release() {
         Self::generate_tar_gz();
     }
