@@ -6,6 +6,9 @@ on:
       - main
       - master
 
+permissions:
+  contents: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -16,6 +19,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0 # necessário para criar/push tag
+          persist-credentials: true
 
       - name: Set up Python
         uses: actions/setup-python@v6
@@ -45,6 +49,7 @@ jobs:
             exit 0
           fi
 
+          # Permissão 'contents: write' adicionada no workflow para permitir push com GITHUB_TOKEN
           git tag "$TAG"
           git push origin "$TAG"
         env:
