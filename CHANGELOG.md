@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.5.0] - 2025-12-29
+
+### Dependency Updates
+
+- Update jdx/mise-action digest to 1567366 (#32)
+- Update jdx/mise-action digest to 8ccca8c (#31)
+- Update jdx/mise-action digest to bf7ce94 (#30)
+- Update jdx/mise-action digest to a14eb42 (#28)
+- Update jdx/mise-action to 61e6c4a (#27)
+- Update Swatinem/rust-cache to 5e4a767 (#26)
+- Update jdx/mise-action digest to 6f53010 (#25)
+- Update rust to v1.92.0 (#22)
+
+### Features
+
+- Setup mergify and cargo config (#29)
+- Add rust cache github action (#23)
+
+### Refactor
+
+- Remove break line and replace controller to cli (#33)
+- Code improvement and add run test CI (#24)
+
 ## [1.4.1] - 2025-12-07
 
 ### Bug Fixes
