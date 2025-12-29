@@ -34,15 +34,14 @@ impl Cli {
         let tar_file = format!("{}.tar.gz", project_name);
 
         let release = OutputCommand::cargo_release_output();
-        Status::check(&release, "cargo release");
+        Status::check(&release);
 
         let tar = OutputCommand::tar_output(&tar_file, project_name);
-        Status::check(&tar, "creating tar.gz");
+        Status::check(&tar);
 
         let shasum = OutputCommand::get_shasum_output(&tar_file);
         Status::check_shasum(&shasum);
 
-        println!("🎉 All tasks completed successfully!\n");
         Self::setup_copy_shasum(&shasum);
     }
 
@@ -60,6 +59,7 @@ impl Cli {
                     eprintln!("❌ Failed to copy to clipboard: {err}");
                 } else {
                     println!("✅ Shasum copied to clipboard!");
+                    println!("🎉 All tasks completed successfully!");
                 }
             }
             Err(err) => {

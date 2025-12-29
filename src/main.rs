@@ -1,5 +1,5 @@
-use releasor::controller::*;
+use releasor::cli::*;
 
 fn main() {
-    Controller::start_release();
+    Cli::start_release();
 }
