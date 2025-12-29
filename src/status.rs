@@ -5,12 +5,12 @@ pub struct Status;
 impl Status {
     pub fn check(output: &Output, task: &str) {
         if output.status.success() {
-            println!("✅ Success {task}");
+            println!("✅ {task}");
             return;
         }
 
         eprintln!(
-            "❌ Error {task}\n{}",
+            "❌ Error {task} {}",
             String::from_utf8_lossy(&output.stderr)
         );
         exit(1);
@@ -19,14 +19,14 @@ impl Status {
     pub fn check_shasum(output: &Output) {
         if output.status.success() {
             println!(
-                "✅ Success get shasum\n{}",
-                String::from_utf8_lossy(&output.stdout)
+                "✅ Get shasum {}",
+                String::from_utf8_lossy(&output.stdout).trim_end()
             );
             return;
         }
 
         eprintln!(
-            "❌ Error get shasum\n{}",
+            "❌ Error get shasum {}",
             String::from_utf8_lossy(&output.stderr)
         );
         exit(1);

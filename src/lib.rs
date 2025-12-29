@@ -1,7 +1,7 @@
-pub mod controller;
+pub mod cli;
 pub mod output_command;
 pub mod status;
 
-pub use controller::Controller;
+pub use cli::Cli;
 pub use output_command::OutputCommand;
 pub use status::Status;
