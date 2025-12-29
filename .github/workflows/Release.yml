@@ -49,7 +49,6 @@ jobs:
             exit 0
           fi
 
-          # Permissão 'contents: write' adicionada no workflow para permitir push com GITHUB_TOKEN
           git tag "$TAG"
           git push origin "$TAG"
         env:
