@@ -18,9 +18,28 @@ impl Cli {
     }
 
     fn generate_tar_gz() {
-        let arg = Args::parse();
-        let project_name = arg.file_name.trim();
+        let project_name = Self::parse_and_validate_project_name();
+        let tar_file = Self::tar_file_name(&project_name);
 
+        Self::run_cargo_release();
+        Self::create_tar_gz(&tar_file, &project_name);
+
+        let shasum_output = Self::compute_shasum(&tar_file);
+        Self::setup_copy_shasum(&shasum_output);
+
+        Self::print_success();
+    }
+
+    fn parse_and_validate_project_name() -> String {
+        let args = Args::parse();
+        let project_name = args.file_name.trim().to_string();
+
+        Self::validate_project_name(&project_name);
+
+        project_name
+    }
+
+    fn validate_project_name(project_name: &str) {
         if project_name.is_empty() {
             eprintln!("❌ Project name can't be empty");
             std::process::exit(1);
@@ -30,19 +49,29 @@ impl Cli {
             eprintln!("❌ Project name must not contain path separators");
             std::process::exit(1);
         }
+    }
 
-        let tar_file = format!("{}.tar.gz", project_name);
+    fn tar_file_name(project_name: &str) -> String {
+        format!("{project_name}.tar.gz")
+    }
 
+    fn run_cargo_release() {
         let release = OutputCommand::cargo_release_output();
         Status::check(&release, "Running cargo release");
+    }
 
-        let tar = OutputCommand::tar_output(&tar_file, project_name);
+    fn create_tar_gz(tar_file: &str, project_name: &str) {
+        let tar = OutputCommand::tar_output(tar_file, project_name);
         Status::check(&tar, "creating tar.gz");
+    }
 
-        let shasum = OutputCommand::get_shasum_output(&tar_file);
+    fn compute_shasum(tar_file: &str) -> std::process::Output {
+        let shasum = OutputCommand::get_shasum_output(tar_file);
         Status::check_shasum(&shasum);
+        shasum
+    }
 
-        Self::setup_copy_shasum(&shasum);
+    fn print_success() {
         println!("🎉 All tasks completed successfully!");
     }
 
