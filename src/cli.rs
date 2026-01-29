@@ -96,15 +96,18 @@ impl Cli {
             .to_string();
 
         let copied = match Clipboard::new() {
-            Ok(mut clipboard) => clipboard.set_text(shasum.clone()).is_ok(),
+            Ok(mut clipboard) => match clipboard.set_text(shasum.clone()) {
+                Ok(()) => true,
+                Err(err) => {
+                    eprintln!("❌ Failed to copy to clipboard: {err}");
+                    false
+                }
+            },
             Err(err) => {
                 eprintln!("❌ Could not access clipboard: {err}");
                 false
             }
         };
-        if !copied && !shasum.is_empty() {
-            eprintln!("❌ Failed to copy to clipboard");
-        }
         (shasum, copied)
     }
 

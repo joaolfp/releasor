@@ -44,6 +44,8 @@ pub fn wait_animate(handle: thread::JoinHandle<()>) {
 }
 
 /// Finishes the progress bar (newline so subsequent output is on a new line).
+/// Resets the internal percentage so the progress bar can be used again in the same process.
 pub fn finish() {
     println!();
+    CURRENT_PCT.store(0, Ordering::Relaxed);
 }
