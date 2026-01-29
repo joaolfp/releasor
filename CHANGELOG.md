@@ -1,5 +1,40 @@
 # Changelog
 
+## [1.6.0] - 2026-01-29
+
+### Bug Fixes
+
+- Add contents:write permission for tag pushing (#34)
+
+### Dependency Updates
+
+- Update Rust crate clap to v4.5.55 (#53)
+- Update jdx/mise-action digest to f03edce (#51)
+- Update jdx/mise-action digest to b128e09 (#50)
+- Update rust to v1.93.0 to v1.93.0 (#49)
+- Update jdx/mise-action digest to 6d1e696 (#47)
+- Update jdx/mise-action digest to c53b923 (#46)
+- Update jdx/mise-action digest to 23096c7 (#45)
+- Update Swatinem/rust-cache digest to 11da852 (#44)
+- Update jdx/mise-action digest to 10c27cd (#43)
+- Update actions/checkout digest to 0c366fd (#42)
+- Update jdx/mise-action digest to e53f0d1 (#41)
+- Update jdx/mise-action digest to 7d22663 (#40)
+- Update actions/checkout digest to 064fe7f (#39)
+- Update jdx/mise-action digest to 5ff8b6c (#38)
+- Update jdx/mise-action digest to cd2d92b (#37)
+- Update Rust crate clap to v4.5.54 (#36)
+- Update jdx/mise-action digest to e0073e7 (#35)
+
+### Features
+
+- Add progress tests (#55)
+- Setup progress bar (#54)
+
+### Refactor
+
+- Fix readme warnings and organize cli.rs (#48)
+
 ## [1.5.0] - 2025-12-29
 
 ### Dependency Updates
