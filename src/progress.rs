@@ -8,12 +8,17 @@ const ANIMATE_MS: u64 = 35;
 
 static CURRENT_PCT: AtomicU8 = AtomicU8::new(0);
 
-/// Renders a text progress bar and updates the current line.
-pub fn show(percent: u8, step: &str) {
+/// Builds the progress line string (bar + percent + step). Used by `show` and by tests.
+pub fn progress_line(percent: u8, step: &str) -> String {
     let filled = (percent as usize * BAR_WIDTH) / 100;
     let empty = BAR_WIDTH.saturating_sub(filled);
     let bar: String = "=".repeat(filled) + &"-".repeat(empty);
-    let line = format!("{} %{} {}", bar, percent, step);
+    format!("{} %{} {}", bar, percent, step)
+}
+
+/// Renders a text progress bar and updates the current line.
+pub fn show(percent: u8, step: &str) {
+    let line = progress_line(percent, step);
     print!("\r{:<80}", line);
     io::stdout().flush().unwrap();
 }
