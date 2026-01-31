@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.6.1] - 2026-01-31
+
+### Bug Fixes
+
+- Tar.gz with a different package name (#59)
+
+### Dependency Updates
+
+- Update jdx/mise-action digest to 850a9f1 (#58)
+- Update Rust crate clap to v4.5.56 (#57)
+
 ## [1.6.0] - 2026-01-29
 
 ### Bug Fixes
