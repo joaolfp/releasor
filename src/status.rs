@@ -9,6 +9,7 @@ impl Status {
             return;
         }
 
+        println!();
         eprintln!(
             "❌ Error {task} {}",
             String::from_utf8_lossy(&output.stderr)
@@ -22,6 +23,7 @@ impl Status {
             return;
         }
 
+        println!();
         eprintln!(
             "❌ Error {task} {}",
             String::from_utf8_lossy(&output.stderr)
@@ -38,6 +40,7 @@ impl Status {
             return;
         }
 
+        println!();
         eprintln!(
             "❌ Error get shasum {}",
             String::from_utf8_lossy(&output.stderr)
@@ -51,6 +54,7 @@ impl Status {
             return;
         }
 
+        println!();
         eprintln!(
             "❌ Error get shasum {}",
             String::from_utf8_lossy(&output.stderr)
