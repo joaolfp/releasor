@@ -64,11 +64,6 @@ impl Cli {
             eprintln!("❌ Project name must not contain path separators");
             std::process::exit(1);
         }
-
-        if project_name != env!("CARGO_PKG_NAME") {
-            eprintln!("❌ {project_name} needs to be the project name");
-            std::process::exit(1);
-        }
     }
 
     fn tar_file_name(project_name: &str) -> String {
