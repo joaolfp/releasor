@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.6.2] - 2026-02-03
+
+### Bug Fixes
+
+- Create tar.gz (#61)
+
+### Dependency Updates
+
+- Update jdx/mise-action digest to 10eed64 (#60)
+
 ## [1.6.1] - 2026-01-31
 
 ### Bug Fixes

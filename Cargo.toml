@@ -1,6 +1,6 @@
 [package]
 name = "releasor"
-version = "1.6.1"
+version = "1.6.2"
 edition = "2024"
 authors = ["João Lucas <joaolucasfp2001@gmail.com>"]
 license = "MIT"
@@ -11,4 +11,4 @@ exclude = [".github/**"]
 
 [dependencies]
 arboard = "3.6.1"
-clap = { version = "4.5.53", features = ["derive"] }
+clap = { version = "4.5.57", features = ["derive"] }
