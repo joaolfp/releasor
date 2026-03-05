@@ -3,38 +3,41 @@ use releasor::progress::{animate_to, finish, progress_line, show, wait_animate};
 #[test]
 fn progress_line_zero_percent() {
     let line = progress_line(0, "starting");
-    assert_eq!(line, format!("{} %0 starting", "-".repeat(40)));
+    assert_eq!(line, format!("\x1b[34m{}\x1b[0m 0% starting", "-".repeat(40)));
 }
 
 #[test]
 fn progress_line_hundred_percent() {
     let line = progress_line(100, "done");
-    assert_eq!(line, format!("{} %100 done", "=".repeat(40)));
+    assert_eq!(line, format!("\x1b[34m{}\x1b[0m 100% done", "=".repeat(40)));
 }
 
 #[test]
 fn progress_line_fifty_percent() {
     let line = progress_line(50, "half");
     let expected_bar = "=".repeat(20) + &"-".repeat(20);
-    assert_eq!(line, format!("{} %50 half", expected_bar));
+    assert_eq!(line, format!("\x1b[34m{}\x1b[0m 50% half", expected_bar));
 }
 
 #[test]
 fn progress_line_one_percent() {
     let line = progress_line(1, "step");
-    assert_eq!(line, "---------------------------------------- %1 step");
+    assert_eq!(line, format!("\x1b[34m{}\x1b[0m 1% step", "-".repeat(40)));
 }
 
 #[test]
 fn progress_line_empty_step() {
     let line = progress_line(0, "");
-    assert_eq!(line, format!("{} %0 ", "-".repeat(40)));
+    assert_eq!(line, format!("\x1b[34m{}\x1b[0m 0% ", "-".repeat(40)));
 }
 
 #[test]
 fn progress_line_bar_width_is_40() {
     let line = progress_line(25, "x");
+
     let bar: String = line
+        .replace("\x1b[34m", "")
+        .replace("\x1b[0m", "")
         .chars()
         .take_while(|c| *c == '=' || *c == '-')
         .collect();
