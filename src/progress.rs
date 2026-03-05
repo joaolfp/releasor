@@ -13,7 +13,7 @@ pub fn progress_line(percent: u8, step: &str) -> String {
     let filled = (percent as usize * BAR_WIDTH) / 100;
     let empty = BAR_WIDTH.saturating_sub(filled);
     let bar: String = "=".repeat(filled) + &"-".repeat(empty);
-    format!("{} %{} {}", bar, percent, step)
+    format!("\x1b[34m{}\x1b[0m {}% {}", bar, percent, step)
 }
 
 /// Renders a text progress bar and updates the current line.
