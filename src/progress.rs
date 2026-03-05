@@ -19,7 +19,7 @@ pub fn progress_line(percent: u8, step: &str) -> String {
 /// Renders a text progress bar and updates the current line.
 pub fn show(percent: u8, step: &str) {
     let line = progress_line(percent, step);
-    print!("\r{:<80}", line);
+    print!("\r{:<89}", line);
     io::stdout().flush().unwrap();
 }
 
