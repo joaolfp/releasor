@@ -49,24 +49,29 @@ impl Cli {
         let args = Args::parse();
         let project_name = args.file_name.trim().to_string();
 
-        Self::validate_project_name(&project_name);
+        if let Err(msg) = Self::validate_project_name(&project_name) {
+            eprintln!("❌ {msg}");
+            std::process::exit(1);
+        }
 
         project_name
     }
 
-    fn validate_project_name(project_name: &str) {
+    /// Validates project name. Returns Ok(()) if valid, Err(message) otherwise.
+    pub fn validate_project_name(project_name: &str) -> Result<(), String> {
         if project_name.is_empty() {
-            eprintln!("❌ Project name can't be empty");
-            std::process::exit(1);
+            return Err("Project name can't be empty".into());
         }
 
         if project_name.contains('/') || project_name.contains('\\') {
-            eprintln!("❌ Project name must not contain path separators");
-            std::process::exit(1);
+            return Err("Project name must not contain path separators".into());
         }
+
+        Ok(())
     }
 
-    fn tar_file_name(project_name: &str) -> String {
+    /// Returns the tar.gz filename for a project name.
+    pub fn tar_file_name(project_name: &str) -> String {
         format!("{project_name}.tar.gz")
     }
 
@@ -87,7 +92,7 @@ impl Cli {
     }
 
     /// Copies shasum to clipboard without printing. Returns the shasum string and clipboard success.
-    fn setup_copy_shasum_quiet(shasum_output: &std::process::Output) -> (String, bool) {
+    pub fn setup_copy_shasum_quiet(shasum_output: &std::process::Output) -> (String, bool) {
         let shasum_raw = String::from_utf8_lossy(&shasum_output.stdout);
         let shasum = shasum_raw
             .split_whitespace()

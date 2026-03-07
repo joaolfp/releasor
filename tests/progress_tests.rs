@@ -3,7 +3,10 @@ use releasor::progress::{animate_to, finish, progress_line, show, wait_animate};
 #[test]
 fn progress_line_zero_percent() {
     let line = progress_line(0, "starting");
-    assert_eq!(line, format!("\x1b[34m{}\x1b[0m 0% starting", "-".repeat(40)));
+    assert_eq!(
+        line,
+        format!("\x1b[34m{}\x1b[0m 0% starting", "-".repeat(40))
+    );
 }
 
 #[test]
