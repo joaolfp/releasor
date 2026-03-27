@@ -93,7 +93,7 @@ impl Cli {
 
     fn create_tar_gz(tar_file: &str, project_name: &str) {
         let tar = OutputCommand::tar_output(tar_file, project_name);
-        
+
         if !tar.status.success() {
             let _ = std::fs::remove_file(tar_file);
         }
@@ -138,7 +138,7 @@ impl Cli {
         println!("✅ Running cargo release");
         println!("✅ creating tar.gz");
         println!("✅ Get shasum {}", hash.trim_end());
-        
+
         if *copied {
             println!("✅ Shasum copied to clipboard!");
         }
