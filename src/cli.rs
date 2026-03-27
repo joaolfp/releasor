@@ -15,32 +15,43 @@ pub struct Cli;
 
 impl Cli {
     pub fn start_release() {
+        Self::print_header();
         Self::generate_tar_gz();
+    }
+
+    fn print_header() {
+        println!("╔══════════════════════════════════╗");
+        println!("║           🚀 releasor            ║");
+        println!("║   Rust Release Automation Tool   ║");
+        println!("╚══════════════════════════════════╝");
+        println!();
     }
 
     fn generate_tar_gz() {
         let project_name = Self::parse_and_validate_project_name();
         let tar_file = Self::tar_file_name(&project_name);
 
-        let h = progress::animate_to(25, "Build project");
+        let progress_handle = progress::animate_to(25, "Build project");
         Self::run_cargo_release();
-        progress::wait_animate(h);
+        progress::wait_animate(progress_handle);
 
-        let h = progress::animate_to(50, "creating tar.gz");
+        let progress_handle = progress::animate_to(50, "creating tar.gz");
         Self::create_tar_gz(&tar_file, &project_name);
-        progress::wait_animate(h);
+        progress::wait_animate(progress_handle);
 
-        let h = progress::animate_to(75, "Get shasum");
+        let progress_handle = progress::animate_to(75, "Get shasum");
         let shasum_output = Self::compute_shasum(&tar_file);
-        progress::wait_animate(h);
+        progress::wait_animate(progress_handle);
 
-        let h = progress::animate_to(100, "Copy shasum to clipboard");
+        let progress_handle = progress::animate_to(100, "Copy shasum to clipboard");
         let shasum = Self::setup_copy_shasum_quiet(&shasum_output);
-        progress::wait_animate(h);
+        progress::wait_animate(progress_handle);
 
         progress::show(100, "Done");
         std::thread::sleep(std::time::Duration::from_millis(300));
         progress::finish();
+
+        println!();
 
         Self::print_results(&shasum);
     }
@@ -82,6 +93,11 @@ impl Cli {
 
     fn create_tar_gz(tar_file: &str, project_name: &str) {
         let tar = OutputCommand::tar_output(tar_file, project_name);
+        
+        if !tar.status.success() {
+            let _ = std::fs::remove_file(tar_file);
+        }
+
         Status::check_quiet(&tar, "creating tar.gz");
     }
 
@@ -122,9 +138,12 @@ impl Cli {
         println!("✅ Running cargo release");
         println!("✅ creating tar.gz");
         println!("✅ Get shasum {}", hash.trim_end());
+        
         if *copied {
             println!("✅ Shasum copied to clipboard!");
         }
+
+        println!();
         println!("🎉 All tasks completed successfully!");
     }
 }
