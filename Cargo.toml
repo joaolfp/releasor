@@ -1,6 +1,6 @@
 [package]
 name = "releasor"
-version = "1.6.3"
+version = "1.7.0"
 edition = "2024"
 authors = ["João Lucas <joaolucasfp2001@gmail.com>"]
 license = "MIT"

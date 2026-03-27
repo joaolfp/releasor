@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.7.0] - 2026-03-26
+
+### Dependency Updates
+
+- Update rust to v1.94.1 to v1.94.1 (#92)
+
+### Features
+
+- Add CLI header banner and cleanup on tar failure (#93)
+
 ## [1.6.3] - 2026-03-05
 
 ### Dependency Updates
