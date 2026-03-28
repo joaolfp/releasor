@@ -1,39 +1,68 @@
-use std::process::{Command, Output};
+use xx::XXError;
+use xx::process;
 
 pub struct OutputCommand;
 
+fn ensure_success(
+    ok: bool,
+    stderr: &[u8],
+    status_when_stderr_empty: impl std::fmt::Display,
+) -> xx::XXResult<()> {
+    if ok {
+        return Ok(());
+    }
+
+    let detail = String::from_utf8_lossy(stderr);
+
+    let message = if detail.trim().is_empty() {
+        format!("exited with {status_when_stderr_empty}")
+    } else {
+        detail.into_owned()
+    };
+
+    Err(XXError::Error(message))
+}
+
 impl OutputCommand {
-    fn run(cmd: &str, args: &[&str], error: &str) -> Output {
-        Command::new(cmd).args(args).output().expect(error)
+    pub fn cargo_release() -> xx::XXResult<()> {
+        let output = process::cmd("cargo", ["build", "--release"])
+            .stdout_capture()
+            .stderr_capture()
+            .unchecked()
+            .run()?;
+
+        ensure_success(output.status.success(), &output.stderr, output.status)?;
+        Ok(())
     }
 
-    pub fn cargo_release_output() -> Output {
-        Self::run(
-            "cargo",
-            &["build", "--release"],
-            "Failed to execute cargo build",
-        )
-    }
-
-    pub fn tar_output(project_tar_gz: &str, project_name: &str) -> Output {
-        Self::run(
+    pub fn tar(project_tar_gz: &str, project_name: &str) -> xx::XXResult<()> {
+        let output = process::cmd(
             "tar",
-            &[
+            [
                 "-cvzf",
                 project_tar_gz,
                 "-C",
                 "target/release",
                 project_name,
             ],
-            "Failed to create tar.gz",
         )
+        .stdout_capture()
+        .stderr_capture()
+        .unchecked()
+        .run()?;
+
+        ensure_success(output.status.success(), &output.stderr, output.status)?;
+        Ok(())
     }
 
-    pub fn get_shasum_output(project_tar_gz: &str) -> Output {
-        Self::run(
-            "shasum",
-            &["-a", "256", project_tar_gz],
-            "Failed to execute shasum",
-        )
+    pub fn get_shasum(project_tar_gz: &str) -> xx::XXResult<String> {
+        let output = process::cmd("shasum", ["-a", "256", project_tar_gz])
+            .stdout_capture()
+            .stderr_capture()
+            .unchecked()
+            .run()?;
+
+        ensure_success(output.status.success(), &output.stderr, output.status)?;
+        Ok(String::from_utf8_lossy(&output.stdout).into_owned())
     }
 }

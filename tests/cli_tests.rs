@@ -1,5 +1,4 @@
 use releasor::Cli;
-use std::process::Command;
 
 #[test]
 fn validate_project_name_empty() {
@@ -49,44 +48,18 @@ fn tar_file_name_format() {
 
 #[test]
 fn setup_copy_shasum_quiet_parses_first_token() {
-    #[cfg(unix)]
-    let out = Command::new("echo")
-        .arg("abc123def456  -")
-        .output()
-        .expect("echo");
-    #[cfg(windows)]
-    let out = Command::new("cmd")
-        .args(["/C", "echo", "abc123def456  -"])
-        .output()
-        .expect("echo");
-
-    let (shasum, _copied) = Cli::setup_copy_shasum_quiet(&out);
+    let (shasum, _copied) = Cli::setup_copy_shasum_quiet("abc123def456  -");
     assert_eq!(shasum, "abc123def456");
 }
 
 #[test]
 fn setup_copy_shasum_quiet_handles_single_line() {
-    #[cfg(unix)]
-    let out = Command::new("echo").arg("onlyhash").output().expect("echo");
-    #[cfg(windows)]
-    let out = Command::new("cmd")
-        .args(["/C", "echo", "onlyhash"])
-        .output()
-        .expect("echo");
-
-    let (shasum, _) = Cli::setup_copy_shasum_quiet(&out);
+    let (shasum, _) = Cli::setup_copy_shasum_quiet("onlyhash");
     assert_eq!(shasum, "onlyhash");
 }
 
 #[test]
 fn setup_copy_shasum_quiet_handles_empty_stdout() {
-    #[cfg(unix)]
-    let out = Command::new("true").output().expect("true");
-    #[cfg(windows)]
-    let out = Command::new("cmd")
-        .args(["/C", "exit", "0"])
-        .output()
-        .expect("exit 0");
-    let (shasum, _) = Cli::setup_copy_shasum_quiet(&out);
+    let (shasum, _) = Cli::setup_copy_shasum_quiet("");
     assert_eq!(shasum, "");
 }

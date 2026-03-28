@@ -3,7 +3,6 @@ use clap::Parser;
 
 use crate::output_command::OutputCommand;
 use crate::progress;
-use crate::status::Status;
 
 #[derive(Parser)]
 struct Args {
@@ -87,30 +86,33 @@ impl Cli {
     }
 
     fn run_cargo_release() {
-        let release = OutputCommand::cargo_release_output();
-        Status::check_quiet(&release, "Running cargo release");
+        OutputCommand::cargo_release().unwrap_or_else(|e| {
+            println!();
+            eprintln!("❌ Error Running cargo release: {e}");
+            std::process::exit(1);
+        });
     }
 
     fn create_tar_gz(tar_file: &str, project_name: &str) {
-        let tar = OutputCommand::tar_output(tar_file, project_name);
-
-        if !tar.status.success() {
+        OutputCommand::tar(tar_file, project_name).unwrap_or_else(|e| {
             let _ = std::fs::remove_file(tar_file);
-        }
-
-        Status::check_quiet(&tar, "creating tar.gz");
+            println!();
+            eprintln!("❌ Error creating tar.gz: {e}");
+            std::process::exit(1);
+        });
     }
 
-    fn compute_shasum(tar_file: &str) -> std::process::Output {
-        let shasum = OutputCommand::get_shasum_output(tar_file);
-        Status::check_shasum_quiet(&shasum);
-        shasum
+    fn compute_shasum(tar_file: &str) -> String {
+        OutputCommand::get_shasum(tar_file).unwrap_or_else(|e| {
+            println!();
+            eprintln!("❌ Error getting shasum: {e}");
+            std::process::exit(1);
+        })
     }
 
     /// Copies shasum to clipboard without printing. Returns the shasum string and clipboard success.
-    pub fn setup_copy_shasum_quiet(shasum_output: &std::process::Output) -> (String, bool) {
-        let shasum_raw = String::from_utf8_lossy(&shasum_output.stdout);
-        let shasum = shasum_raw
+    pub fn setup_copy_shasum_quiet(shasum_output: &str) -> (String, bool) {
+        let shasum = shasum_output
             .split_whitespace()
             .next()
             .unwrap_or("")
