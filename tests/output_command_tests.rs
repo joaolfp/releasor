@@ -3,26 +3,12 @@ use std::fs;
 
 #[test]
 fn test_release_tar_and_shasum_flow() {
-    let out = OutputCommand::cargo_release_output();
-    assert!(
-        out.status.success(),
-        "cargo build --release failed:\n{}",
-        String::from_utf8_lossy(&out.stderr)
-    );
+    OutputCommand::cargo_release().expect("cargo build --release failed");
 
-    let out = OutputCommand::tar_output("releasor.tar.gz", "releasor");
-    assert!(
-        out.status.success(),
-        "tar failed:\n{}",
-        String::from_utf8_lossy(&out.stderr)
-    );
+    OutputCommand::tar("releasor.tar.gz", "releasor").expect("tar failed");
 
-    let out = OutputCommand::get_shasum_output("releasor.tar.gz");
-    assert!(
-        out.status.success(),
-        "shasum failed:\n{}",
-        String::from_utf8_lossy(&out.stderr)
-    );
+    let shasum = OutputCommand::get_shasum("releasor.tar.gz").expect("shasum failed");
+    assert!(!shasum.is_empty(), "shasum output should not be empty");
 
     fs::remove_file("releasor.tar.gz").expect("Failed to delete releasor.tar.gz");
 }

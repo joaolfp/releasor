@@ -1,39 +1,34 @@
-use std::process::{Command, Output};
+use xx::process;
 
 pub struct OutputCommand;
 
 impl OutputCommand {
-    fn run(cmd: &str, args: &[&str], error: &str) -> Output {
-        Command::new(cmd).args(args).output().expect(error)
+    pub fn cargo_release() -> xx::XXResult<()> {
+        process::cmd("cargo", ["build", "--release"])
+            .stdout_capture()
+            .stderr_capture()
+            .run()
+            .map(|_| ())
     }
 
-    pub fn cargo_release_output() -> Output {
-        Self::run(
-            "cargo",
-            &["build", "--release"],
-            "Failed to execute cargo build",
-        )
-    }
-
-    pub fn tar_output(project_tar_gz: &str, project_name: &str) -> Output {
-        Self::run(
+    pub fn tar(project_tar_gz: &str, project_name: &str) -> xx::XXResult<()> {
+        process::cmd(
             "tar",
-            &[
+            [
                 "-cvzf",
                 project_tar_gz,
                 "-C",
                 "target/release",
                 project_name,
             ],
-            "Failed to create tar.gz",
         )
+        .stdout_capture()
+        .stderr_capture()
+        .run()
+        .map(|_| ())
     }
 
-    pub fn get_shasum_output(project_tar_gz: &str) -> Output {
-        Self::run(
-            "shasum",
-            &["-a", "256", project_tar_gz],
-            "Failed to execute shasum",
-        )
+    pub fn get_shasum(project_tar_gz: &str) -> xx::XXResult<String> {
+        process::cmd("shasum", ["-a", "256", project_tar_gz]).read()
     }
 }

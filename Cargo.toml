@@ -12,3 +12,4 @@ exclude = [".github/**"]
 [dependencies]
 arboard = "3.6.1"
 clap = { version = "4.5.60", features = ["derive"] }
+xx = "2.5.2"
