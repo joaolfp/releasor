@@ -1,19 +1,21 @@
-use std::process::Output;
-
-use xx::process;
 use xx::XXError;
+use xx::process;
 
 pub struct OutputCommand;
 
-fn fail_if_unsuccessful(output: Output) -> xx::XXResult<()> {
-    if output.status.success() {
+fn ensure_success(
+    ok: bool,
+    stderr: &[u8],
+    status_when_stderr_empty: impl std::fmt::Display,
+) -> xx::XXResult<()> {
+    if ok {
         return Ok(());
     }
 
-    let detail = String::from_utf8_lossy(&output.stderr);
+    let detail = String::from_utf8_lossy(stderr);
 
     let message = if detail.trim().is_empty() {
-        format!("exited with {status}", status = output.status)
+        format!("exited with {status_when_stderr_empty}")
     } else {
         detail.into_owned()
     };
@@ -29,7 +31,8 @@ impl OutputCommand {
             .unchecked()
             .run()?;
 
-        fail_if_unsuccessful(output)
+        ensure_success(output.status.success(), &output.stderr, output.status)?;
+        Ok(())
     }
 
     pub fn tar(project_tar_gz: &str, project_name: &str) -> xx::XXResult<()> {
@@ -48,10 +51,18 @@ impl OutputCommand {
         .unchecked()
         .run()?;
 
-        fail_if_unsuccessful(output)
+        ensure_success(output.status.success(), &output.stderr, output.status)?;
+        Ok(())
     }
 
     pub fn get_shasum(project_tar_gz: &str) -> xx::XXResult<String> {
-        process::cmd("shasum", ["-a", "256", project_tar_gz]).read()
+        let output = process::cmd("shasum", ["-a", "256", project_tar_gz])
+            .stdout_capture()
+            .stderr_capture()
+            .unchecked()
+            .run()?;
+
+        ensure_success(output.status.success(), &output.stderr, output.status)?;
+        Ok(String::from_utf8_lossy(&output.stdout).into_owned())
     }
 }
