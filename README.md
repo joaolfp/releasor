@@ -3,10 +3,10 @@
 <a href="https://crates.io/crates/releasor">
     <img src="https://img.shields.io/crates/v/releasor?style=for-the-badge&labelColor=1C2C2E&color=C96329&logo=Rust&logoColor=white" /></a>
     
-  <a href="https://github.com/heroesofcode/releasor/actions/workflows/CI.yml">
-    <img src="https://img.shields.io/github/actions/workflow/status/heroesofcode/releasor/CI.yml?style=for-the-badge&labelColor=1C2C2E&label=CI&color=BEC5C9&logo=GitHub%20Actions&logoColor=BEC5C9" /></a>
+  <a href="https://github.com/joaolfp/releasor/actions/workflows/CI.yml">
+    <img src="https://img.shields.io/github/actions/workflow/status/joaolfp/releasor/CI.yml?style=for-the-badge&labelColor=1C2C2E&label=CI&color=BEC5C9&logo=GitHub%20Actions&logoColor=BEC5C9" /></a>
         
-  <a href="https://github.com/heroesofcode/releasor/blob/main/LICENSE">
+  <a href="https://github.com/joalfp/releasor/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-BEC5C9?style=for-the-badge&labelColor=1C2C2E&logoColor=BEC5C9" /></a>
 </p>
 
