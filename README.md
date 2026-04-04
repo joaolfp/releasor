@@ -1,16 +1,13 @@
 # releasor
 
 <a href="https://crates.io/crates/releasor">
-  <img src="https://img.shields.io/crates/v/releasor?style=for-the-badge&labelColor=1C2C2E&color=C96329&logo=Rust&logoColor=white" alt="Crates.io version badge for Releasor" />
-</a>
+  <img src="https://img.shields.io/crates/v/releasor?style=for-the-badge&labelColor=1C2C2E&color=C96329&logo=Rust&logoColor=white" alt="Crates.io version badge for Releasor" /></a>
 
 <a href="https://github.com/joaolfp/releasor/actions/workflows/CI.yml">
-  <img src="https://img.shields.io/github/actions/workflow/status/joaolfp/releasor/CI.yml?style=for-the-badge&labelColor=1C2C2E&label=CI&color=BEC5C9&logo=GitHub%20Actions&logoColor=BEC5C9" alt="GitHub Actions CI status badge" />
-</a>
+  <img src="https://img.shields.io/github/actions/workflow/status/joaolfp/releasor/CI.yml?style=for-the-badge&labelColor=1C2C2E&label=CI&color=BEC5C9&logo=GitHub%20Actions&logoColor=BEC5C9" alt="GitHub Actions CI status badge" /></a>
 
 <a href="https://github.com/joaolfp/releasor/blob/main/LICENSE">
-  <img src="https://img.shields.io/badge/license-MIT-BEC5C9?style=for-the-badge&labelColor=1C2C2E&logoColor=BEC5C9" alt="MIT license badge" />
-</a>
+  <img src="https://img.shields.io/badge/license-MIT-BEC5C9?style=for-the-badge&labelColor=1C2C2E&logoColor=BEC5C9" alt="MIT license badge" /></a>
 
 A command-line tool to automate release tasks for Rust 🦀 projects and libraries. releasor streamlines building, packaging into `.tar.gz` archives, and verifying binaries, providing a fast and consistent release workflow.
 

@@ -18,6 +18,48 @@ impl Cli {
         Self::generate_tar_gz();
     }
 
+    /// Validates project name. Returns Ok(()) if valid, Err(message) otherwise.
+    pub fn validate_project_name(project_name: &str) -> Result<(), String> {
+        if project_name.is_empty() {
+            return Err("Project name can't be empty".into());
+        }
+
+        if project_name.contains('/') || project_name.contains('\\') {
+            return Err("Project name must not contain path separators".into());
+        }
+
+        Ok(())
+    }
+
+    /// Returns the tar.gz filename for a project name.
+    pub fn tar_file_name(project_name: &str) -> String {
+        format!("{project_name}.tar.gz")
+    }
+
+    /// Copies shasum to clipboard without printing. Returns the shasum string and clipboard success.
+    pub fn setup_copy_shasum_quiet(shasum_output: &str) -> (String, bool) {
+        let shasum = shasum_output
+            .split_whitespace()
+            .next()
+            .unwrap_or("")
+            .to_string();
+
+        let copied = match Clipboard::new() {
+            Ok(mut clipboard) => match clipboard.set_text(shasum.clone()) {
+                Ok(()) => true,
+                Err(err) => {
+                    eprintln!("❌ Failed to copy to clipboard: {err}");
+                    false
+                }
+            },
+            Err(err) => {
+                eprintln!("❌ Could not access clipboard: {err}");
+                false
+            }
+        };
+        (shasum, copied)
+    }
+
     fn print_header() {
         println!("╔══════════════════════════════════╗");
         println!("║           🚀 releasor            ║");
@@ -67,24 +109,6 @@ impl Cli {
         project_name
     }
 
-    /// Validates project name. Returns Ok(()) if valid, Err(message) otherwise.
-    pub fn validate_project_name(project_name: &str) -> Result<(), String> {
-        if project_name.is_empty() {
-            return Err("Project name can't be empty".into());
-        }
-
-        if project_name.contains('/') || project_name.contains('\\') {
-            return Err("Project name must not contain path separators".into());
-        }
-
-        Ok(())
-    }
-
-    /// Returns the tar.gz filename for a project name.
-    pub fn tar_file_name(project_name: &str) -> String {
-        format!("{project_name}.tar.gz")
-    }
-
     fn run_cargo_release() {
         OutputCommand::cargo_release().unwrap_or_else(|e| {
             println!();
@@ -108,30 +132,6 @@ impl Cli {
             eprintln!("❌ Error getting shasum: {e}");
             std::process::exit(1);
         })
-    }
-
-    /// Copies shasum to clipboard without printing. Returns the shasum string and clipboard success.
-    pub fn setup_copy_shasum_quiet(shasum_output: &str) -> (String, bool) {
-        let shasum = shasum_output
-            .split_whitespace()
-            .next()
-            .unwrap_or("")
-            .to_string();
-
-        let copied = match Clipboard::new() {
-            Ok(mut clipboard) => match clipboard.set_text(shasum.clone()) {
-                Ok(()) => true,
-                Err(err) => {
-                    eprintln!("❌ Failed to copy to clipboard: {err}");
-                    false
-                }
-            },
-            Err(err) => {
-                eprintln!("❌ Could not access clipboard: {err}");
-                false
-            }
-        };
-        (shasum, copied)
     }
 
     /// Print all results after the progress bar is done.
