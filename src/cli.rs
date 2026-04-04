@@ -24,6 +24,10 @@ impl Cli {
             return Err("Project name can't be empty".into());
         }
 
+        if project_name == "." || project_name == ".." {
+            return Err("Project name cannot be '.' or '..'".into());
+        }
+
         if project_name.contains('/') || project_name.contains('\\') {
             return Err("Project name must not contain path separators".into());
         }
@@ -44,19 +48,21 @@ impl Cli {
             .unwrap_or("")
             .to_string();
 
-        let copied = match Clipboard::new() {
-            Ok(mut clipboard) => match clipboard.set_text(shasum.clone()) {
-                Ok(()) => true,
+        let copied = !shasum.is_empty()
+            && match Clipboard::new() {
+                Ok(mut clipboard) => match clipboard.set_text(shasum.clone()) {
+                    Ok(()) => true,
+                    Err(err) => {
+                        eprintln!("❌ Failed to copy to clipboard: {err}");
+                        false
+                    }
+                },
                 Err(err) => {
-                    eprintln!("❌ Failed to copy to clipboard: {err}");
+                    eprintln!("❌ Could not access clipboard: {err}");
                     false
                 }
-            },
-            Err(err) => {
-                eprintln!("❌ Could not access clipboard: {err}");
-                false
-            }
-        };
+            };
+
         (shasum, copied)
     }
 
