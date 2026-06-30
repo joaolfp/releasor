@@ -1,5 +1,33 @@
 # Changelog
 
+## [2.0.0] - 2026-06-30
+
+### Dependency Updates
+
+- Update Rust to v1.96.1 ([#121](https://github.com/joaolfp/releasor/pull/121))
+- Update Rust crate xx to v2.6.1 ([#118](https://github.com/joaolfp/releasor/pull/118))
+- Update Rust crate xx to v2.6.0 ([#117](https://github.com/joaolfp/releasor/pull/117))
+- Update rust to v1.96.0 to v1.96.0 ([#116](https://github.com/joaolfp/releasor/pull/116))
+- Update rust to v1.95.0 to v1.95.0 ([#115](https://github.com/joaolfp/releasor/pull/115))
+- Update Rust crate clap to v4.6.1 ([#114](https://github.com/joaolfp/releasor/pull/114))
+- Update Rust crate xx to v2.5.4 ([#113](https://github.com/joaolfp/releasor/pull/113))
+- Update Rust crate xx to v2.5.3 ([#106](https://github.com/joaolfp/releasor/pull/106))
+
+### Features
+
+- Add release-plz workflow and open-pr skill ([#97](https://github.com/joaolfp/releasor/pull/97))
+
+### Refactor
+
+- Move public methods before private in Cli impl and fix README badge formatting ([#103](https://github.com/joaolfp/releasor/pull/103))
+- Replace Status abstraction with xx crate and Result-based error handling ([#94](https://github.com/joaolfp/releasor/pull/94))
+
+### Chore
+
+- Add autofix.ci workflow and update README badges ([#99](https://github.com/joaolfp/releasor/pull/99))
+
+
+
 ## [1.7.0] - 2026-03-26
 
 ### Dependency Updates
