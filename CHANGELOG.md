@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.0.1] - 2026-09-04
+
+### Dependency Updates
+
+- Update Rust to v1.98.1 ([#133](https://github.com/joaolfp/releasor/pull/133))
+- Update Rust to v1.98.0 ([#132](https://github.com/joaolfp/releasor/pull/132))
+- Update Rust crate clap to v4.6.6 ([#131](https://github.com/joaolfp/releasor/pull/131))
+- Update Rust crate clap to v4.6.5 ([#130](https://github.com/joaolfp/releasor/pull/130))
+- Update Rust crate clap to v4.6.4 ([#128](https://github.com/joaolfp/releasor/pull/128))
+- Update Rust crate clap to v4.6.3 ([#127](https://github.com/joaolfp/releasor/pull/127))
+- Update Rust to v1.97.1 ([#125](https://github.com/joaolfp/releasor/pull/125))
+- Update Rust crate clap to v4.6.2 ([#124](https://github.com/joaolfp/releasor/pull/124))
+- Update Rust to v1.97.0 ([#122](https://github.com/joaolfp/releasor/pull/122))
+
+### Refactor
+
+- Rename single-letter variable to descriptive name ([#129](https://github.com/joaolfp/releasor/pull/129))
+
+
+
 ## [2.0.0] - 2026-06-30
 
 ### Dependency Updates
