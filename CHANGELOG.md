@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.0.2] - 2026-11-15
+
+### Bug Fixes
+
+- Plain progress output in CI and skip waiting on animation ([#143](https://github.com/joaolfp/releasor/pull/143))
+
+### Dependency Updates
+
+- Update Rust to v1.100.0 ([#141](https://github.com/joaolfp/releasor/pull/141))
+
+
+
 ## [2.0.1] - 2026-10-17
 
 ### Dependency Updates
