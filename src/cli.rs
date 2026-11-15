@@ -91,11 +91,19 @@ impl Cli {
         progress::wait_animate(progress_handle);
 
         let progress_handle = progress::animate_to(100, "Copy shasum to clipboard");
-        let shasum = Self::setup_copy_shasum_quiet(&shasum_output);
+        let shasum = if std::env::var_os("CI").is_some() {
+            // No clipboard on CI runners; just report the hash.
+            let hash = shasum_output.split_whitespace().next().unwrap_or("");
+            (hash.to_string(), false)
+        } else {
+            Self::setup_copy_shasum_quiet(&shasum_output)
+        };
         progress::wait_animate(progress_handle);
 
-        progress::show(100, "Done");
-        std::thread::sleep(std::time::Duration::from_millis(300));
+        if progress::is_interactive() {
+            progress::show(100, "Done");
+            std::thread::sleep(std::time::Duration::from_millis(150));
+        }
         progress::finish();
 
         println!();
