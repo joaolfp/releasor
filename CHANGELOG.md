@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.3] - 2026-11-20
+
+### Chore
+
+- Update Cargo.lock dependencies
+
+
+
 ## [2.0.2] - 2026-11-15
 
 ### Bug Fixes
