@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.3] - 2026-11-28
+
+### Dependency Updates
+
+- Update Rust to v1.100.1 ([#148](https://github.com/joaolfp/releasor/pull/148))
+
+
+
 ## [2.0.2] - 2026-11-15
 
 ### Bug Fixes
